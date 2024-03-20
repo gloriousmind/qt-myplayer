@@ -13,7 +13,7 @@ public:
     void stopLrcMask();
     void pauseLrcMask();
     QTimer * lrcTimer();
-    bool & mask_flag();
+    bool & mask_flag_from_pause();
 
 protected:
     void paintEvent(QPaintEvent * event);

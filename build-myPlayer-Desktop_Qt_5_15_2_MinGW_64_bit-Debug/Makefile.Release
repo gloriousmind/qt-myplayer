@@ -1053,6 +1053,13 @@ release/mywidget.o: ../myPlayer/mywidget.cpp ../myPlayer/mywidget.h \
 		../../../../qt/5.15.2/mingw81_64/include/QtWidgets/qsystemtrayicon.h \
 		../../../../qt/5.15.2/mingw81_64/include/QtGui/qicon.h \
 		ui_mywidget.h \
+		../../../../qt/5.15.2/mingw81_64/include/QtWidgets/QApplication \
+		../../../../qt/5.15.2/mingw81_64/include/QtWidgets/qapplication.h \
+		../../../../qt/5.15.2/mingw81_64/include/QtCore/qcoreapplication.h \
+		../../../../qt/5.15.2/mingw81_64/include/QtCore/qeventloop.h \
+		../../../../qt/5.15.2/mingw81_64/include/QtWidgets/qdesktopwidget.h \
+		../../../../qt/5.15.2/mingw81_64/include/QtGui/qguiapplication.h \
+		../../../../qt/5.15.2/mingw81_64/include/QtGui/qinputmethod.h \
 		../myPlayer/mylrc.h \
 		../../../../qt/5.15.2/mingw81_64/include/QtWidgets/QLabel \
 		../../../../qt/5.15.2/mingw81_64/include/QtWidgets/qlabel.h \

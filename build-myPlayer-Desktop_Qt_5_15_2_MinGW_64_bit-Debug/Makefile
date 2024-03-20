@@ -223,6 +223,7 @@ Makefile: ../myPlayer/myPlayer.pro ../../../../qt/5.15.2/mingw81_64/mkspecs/win3
 		../../../../qt/5.15.2/mingw81_64/mkspecs/features/qt_config.prf \
 		../../../../qt/5.15.2/mingw81_64/mkspecs/win32-g++/qmake.conf \
 		../../../../qt/5.15.2/mingw81_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../qt/5.15.2/mingw81_64/mkspecs/features/exclusive_builds.prf \
 		../../../../qt/5.15.2/mingw81_64/mkspecs/features/toolchain.prf \
 		../../../../qt/5.15.2/mingw81_64/mkspecs/features/default_pre.prf \
@@ -252,7 +253,6 @@ Makefile: ../myPlayer/myPlayer.pro ../../../../qt/5.15.2/mingw81_64/mkspecs/win3
 		../../../../qt/5.15.2/mingw81_64/lib/Qt5Network.prl \
 		../../../../qt/5.15.2/mingw81_64/lib/Qt5Core.prl \
 		../../../../qt/5.15.2/mingw81_64/lib/qtmain.prl \
-		.qmake.stash \
 		../../../../qt/5.15.2/mingw81_64/mkspecs/features/build_pass.prf \
 		../myPlayer/images.qrc
 	$(QMAKE) -o Makefile ..\myPlayer\myPlayer.pro -spec win32-g++ "CONFIG+=debug"
@@ -409,6 +409,7 @@ Makefile: ../myPlayer/myPlayer.pro ../../../../qt/5.15.2/mingw81_64/mkspecs/win3
 ../../../../qt/5.15.2/mingw81_64/mkspecs/features/qt_config.prf:
 ../../../../qt/5.15.2/mingw81_64/mkspecs/win32-g++/qmake.conf:
 ../../../../qt/5.15.2/mingw81_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../qt/5.15.2/mingw81_64/mkspecs/features/exclusive_builds.prf:
 ../../../../qt/5.15.2/mingw81_64/mkspecs/features/toolchain.prf:
 ../../../../qt/5.15.2/mingw81_64/mkspecs/features/default_pre.prf:
@@ -438,7 +439,6 @@ Makefile: ../myPlayer/myPlayer.pro ../../../../qt/5.15.2/mingw81_64/mkspecs/win3
 ../../../../qt/5.15.2/mingw81_64/lib/Qt5Network.prl:
 ../../../../qt/5.15.2/mingw81_64/lib/Qt5Core.prl:
 ../../../../qt/5.15.2/mingw81_64/lib/qtmain.prl:
-.qmake.stash:
 ../../../../qt/5.15.2/mingw81_64/mkspecs/features/build_pass.prf:
 ../myPlayer/images.qrc:
 qmake: FORCE

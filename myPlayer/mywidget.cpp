@@ -89,11 +89,11 @@ void MyWidget::initPlayer()
     //创建播放控制动作工具栏
     QToolBar * toolBar = new QToolBar(this);
     //播放动作
-    playAction = new QAction(this);
-    playAction->setIcon(QIcon(":/image/images/play.png"));
-    playAction->setText("播放(F5)");
-    playAction->setShortcut(QKeySequence("F5"));
-    connect(playAction, SIGNAL(triggered()), this, SLOT(setPaused()));
+    playorpauseAction = new QAction(this);
+    playorpauseAction->setIcon(QIcon(":/image/images/play.png"));
+    playorpauseAction->setText("播放(F5)");
+    playorpauseAction->setShortcut(QKeySequence("F5"));
+    connect(playorpauseAction, SIGNAL(triggered()), this, SLOT(set_plaly_or_pause()));
     //停止动作
     stopAction = new QAction(this);
     stopAction->setIcon(QIcon(":/image/images/stop.png"));
@@ -125,7 +125,7 @@ void MyWidget::initPlayer()
     volumeSlider->setValue(50);
     connect(volumeSlider, SIGNAL(sliderMoved(int)), mediaObject_ctrl_playback, SLOT(setVolume(int)));
     //添加动作到工具栏
-    toolBar->addAction(playAction);
+    toolBar->addAction(playorpauseAction);
     toolBar->addSeparator();
     toolBar->addAction(stopAction);
     toolBar->addSeparator();
@@ -155,10 +155,10 @@ void MyWidget::initPlayer()
     connect(playlist, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableDoubleClicked(int)));
     connect(playlist, SIGNAL(playlistClean()), this, SLOT(clearSources()));
     connect(mediaObject_ctrl_resolve, &QMediaPlayer::metaDataAvailableChanged, this, &MyWidget::metaDataAvailableChanged);
-    connect(mediaObject_ctrl_playback, SIGNAL(currentMediaChanged(const QMediaContent &)), this, SLOT(mediaChanged(const QMediaContent &)));
+    connect(mediaObject_ctrl_playback, SIGNAL(currentMediaChanged(const QMediaContent &)), this, SLOT(currentmediaChanged(const QMediaContent &)));
 
     //初始化动作图标状态
-    playAction->setEnabled(false);
+    playorpauseAction->setEnabled(false);
     stopAction->setEnabled(false);
     skipBackwardAction->setEnabled(false);
     skipForwardAction->setEnabled(false);
@@ -173,7 +173,7 @@ void MyWidget::initPlayer()
     //创建菜单
     QMenu * menu = new QMenu;
     QList<QAction *> actions;
-    actions << playAction << stopAction << skipBackwardAction << skipForwardAction;
+    actions << playorpauseAction << stopAction << skipBackwardAction << skipForwardAction;
     menu->addActions(actions);
     menu->addSeparator();
     menu->addAction(PLAction);
@@ -200,30 +200,30 @@ void MyWidget::updateTime(qint64 time)
     //歌词文件更新
     if (!lrcMap.empty())
     {
-        int cur_lrc = 0;
-        int next_lrc = 0;
+        int cur_time = 0;
+        int next_time = 0;
         foreach (qint64 value, lrcMap.keys())
         {
             if (time >= value)
-                cur_lrc = value;
+                cur_time = value;
             else
             {
-                next_lrc = value;
+                next_time = value;
                 break;
             }
         }
-        if (next_lrc == 0)
+        if (next_time == 0)
         {
-            next_lrc = totalTimeValue;
+            next_time = totalTimeValue;
         }
-        QString curlrc = lrcMap[cur_lrc];
+        QString curlrc = lrcMap[cur_time];
         if (curlrc.length() < 2)
             curlrc = "MyPlayer音乐播放器";
         if (curlrc != lrc->text())
         {
             lrc->setText(curlrc);
             topLabel->setText(curlrc);
-            qint64 interval = next_lrc - cur_lrc;
+            qint64 interval = next_time - cur_time;
             lrc->startLrcMask(interval);
         }
     }
@@ -263,10 +263,10 @@ void MyWidget::openFile()
 //解析文件及相应解析后状态处理
 void MyWidget::metaDataAvailableChanged(bool available)
 {
-    //错误状态从媒体源除去新添加得媒体源
+    //若产生错误状态从媒体源去除新添加的媒体源
     if (mediaObject_ctrl_playback->error() != QMediaPlayer::NoError)
     {
-        while (!sources.empty() && !(sources.takeLast() == mediaObject_ctrl_resolve->currentMedia()))
+        while (!sources.empty() && !(sources.takeLast() == mediaObject_ctrl_resolve->media()))
         {}
     }
 
@@ -275,7 +275,7 @@ void MyWidget::metaDataAvailableChanged(bool available)
         //获取标题，如果为空使用文件名
         QString title = mediaObject_ctrl_resolve->metaData("Title").toString();
         if (title == "")
-            title = mediaObject_ctrl_resolve->currentMedia().request().url().fileName();
+            title = mediaObject_ctrl_resolve->media().request().url().fileName();
         QTableWidgetItem * titleItem = new QTableWidgetItem(title);
         titleItem->setFlags(titleItem->flags() & (~Qt::ItemIsEditable)); //设置数据项不可编辑
 
@@ -294,15 +294,13 @@ void MyWidget::metaDataAvailableChanged(bool available)
         playlist->setItem(currentRow, 0, titleItem);
         playlist->setItem(currentRow, 1, artistItem);
         playlist->setItem(currentRow, 2, timeItem);
-        int index = sources.indexOf(mediaObject_ctrl_resolve->currentMedia()) + 1;
+        int index = sources.indexOf(mediaObject_ctrl_resolve->media()) + 1;
         if (index < sources.size())
         {
             mediaObject_ctrl_resolve->setMedia(sources[index]);
         }
         else
-        {
             changeActionState();
-        }
     }
 }
 
@@ -312,34 +310,34 @@ void MyWidget::changeActionState()
     //如果媒体源列表为空
     if (sources.count() == 0)
     {
-        //播放列表为空且处于停止状态，(可能播放歌曲时清空了列表)，播放和停止都不可用
+        //播放列表为空且处于停止状态，播放和停止都不可用
         if (mediaObject_ctrl_playback->state() == QMediaPlayer::StoppedState)
         {
-            playAction->setEnabled(false);
+            playorpauseAction->setEnabled(false);
             stopAction->setEnabled(false);
-            playAction->setIcon(QIcon(":image/images/play.png"));
+            playorpauseAction->setIcon(QIcon(":image/images/play.png"));
         }
         skipBackwardAction->setEnabled(false);
         skipForwardAction->setEnabled(false);
     }
     else //播放列表不为空
     {
-        playAction->setEnabled(true);
+        playorpauseAction->setEnabled(true);
         if (mediaObject_ctrl_playback->state() == QMediaPlayer::StoppedState)
         {
             stopAction->setEnabled(false);
             timeLabel->setText("00:00 / 00:00");
             mediaProgress->setRange(0, mediaObject_ctrl_playback->duration());
             mediaProgress->setValue(0);
-            playAction->setIcon(QIcon(":/image/images/play.png"));
-            playAction->setText("播放(F5)"); //descriptive text
+            playorpauseAction->setIcon(QIcon(":/image/images/play.png"));
+            playorpauseAction->setText("播放(F5)");
             lrc->stopLrcMask();
             this->lrcMap.clear();
             lrc->setText("MyMediaPlayer");
         }
         else
             stopAction->setEnabled(true);
-        if (sources.count() == 1)
+        if (!sources.contains(mediaObject_ctrl_playback->currentMedia()) || sources.count() == 1)
         {
             skipBackwardAction->setEnabled(false);
             skipForwardAction->setEnabled(false);
@@ -348,7 +346,7 @@ void MyWidget::changeActionState()
         {
             skipBackwardAction->setEnabled(true);
             skipForwardAction->setEnabled(true);
-            int index = playlist->currentRow();
+            int index = sources.indexOf(mediaObject_ctrl_playback->currentMedia());
             if (index == 0)
                 skipBackwardAction->setEnabled(false);
             if (index + 1 == sources.count())
@@ -358,7 +356,7 @@ void MyWidget::changeActionState()
 }
 
 //播放或暂停
-void MyWidget::setPaused()
+void MyWidget::set_plaly_or_pause()
 {
     if (mediaObject_ctrl_playback->state() == QMediaPlayer::PlayingState)
     {
@@ -413,7 +411,7 @@ void MyWidget::tableDoubleClicked(int row)
     mediaObject_ctrl_playback->play();
 }
 
-//清空媒体源播放列表，它与播放列表的playlistClean()信号关联
+//清空QList中的媒体源
 void MyWidget::clearSources()
 {
     sources.clear();
@@ -442,12 +440,12 @@ void MyWidget::stateChanged(QMediaPlayer::State state)
             break;
     case QMediaPlayer::PlayingState:
         stopAction->setEnabled(true);
-        playAction->setIcon(QIcon(":/image/images/pause.png"));
-        playAction->setText("暂停(F5)");
+        playorpauseAction->setIcon(QIcon(":/image/images/pause.png"));
+        playorpauseAction->setText("暂停(F5)");
         topLabel->setText((mediaObject_ctrl_playback->currentMedia().request().url().fileName()));
-        if (lrc->mask_flag())
+        if (lrc->mask_flag_from_pause())
         {
-            lrc->mask_flag() = false;
+            lrc->mask_flag_from_pause() = false;
             lrc->lrcTimer()->start(30);
         }
         else
@@ -455,8 +453,8 @@ void MyWidget::stateChanged(QMediaPlayer::State state)
         break;
     case QMediaPlayer::PausedState:
         stopAction->setEnabled(true);
-        playAction->setIcon(QIcon(":/image/images/play.png"));
-        playAction->setText("播放(F5)");
+        playorpauseAction->setIcon(QIcon(":/image/images/play.png"));
+        playorpauseAction->setText("播放(F5)");
         if (!lrcMap.empty())
         {
             lrc->pauseLrcMask();
@@ -538,8 +536,8 @@ void MyWidget::showError(QMediaPlayer::Error error)
     }
 }
 
-//媒体源改变时，播放列表中选择相应的行并更新图标状态
-void MyWidget::mediaChanged(const QMediaContent & media)
+//当前播放媒体源改变时，播放列表中选择相应的行并更新图标状态
+void MyWidget::currentmediaChanged(const QMediaContent & media)
 {
     int index = sources.indexOf(media);
     playlist->selectRow(index);

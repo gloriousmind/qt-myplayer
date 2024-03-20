@@ -24,7 +24,7 @@ public:
 
 private slots:
     void updateTime(qint64 time);
-    void setPaused();
+    void set_plaly_or_pause();
     void setStop();
     void skipBackward();
     void skipForward();
@@ -36,7 +36,7 @@ private slots:
     void mediaStatusChanged(QMediaPlayer::MediaStatus status);
     void showError(QMediaPlayer::Error error);
 
-    void mediaChanged(const QMediaContent &media);
+    void currentmediaChanged(const QMediaContent &media);
     void metaDataAvailableChanged(bool available);
     void tableDoubleClicked(int row);
     void clearSources();
@@ -48,7 +48,7 @@ private:
     void initPlayer();
     QMediaPlayer * mediaObject_ctrl_playback;
     QMediaPlayer * mediaObject_ctrl_resolve;
-    QAction *playAction;
+    QAction *playorpauseAction;
     QAction *stopAction;
     QAction *skipBackwardAction;
     QAction *skipForwardAction;

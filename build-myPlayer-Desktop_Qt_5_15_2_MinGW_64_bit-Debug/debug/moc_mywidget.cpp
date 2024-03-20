@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MyWidget_t {
     QByteArrayData data[31];
-    char stringdata0[407];
+    char stringdata0[423];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,43 +36,43 @@ QT_MOC_LITERAL(0, 0, 8), // "MyWidget"
 QT_MOC_LITERAL(1, 9, 10), // "updateTime"
 QT_MOC_LITERAL(2, 20, 0), // ""
 QT_MOC_LITERAL(3, 21, 4), // "time"
-QT_MOC_LITERAL(4, 26, 9), // "setPaused"
-QT_MOC_LITERAL(5, 36, 7), // "setStop"
-QT_MOC_LITERAL(6, 44, 12), // "skipBackward"
-QT_MOC_LITERAL(7, 57, 11), // "skipForward"
-QT_MOC_LITERAL(8, 69, 8), // "openFile"
-QT_MOC_LITERAL(9, 78, 16), // "setPlaylistShown"
-QT_MOC_LITERAL(10, 95, 11), // "setLrcShown"
-QT_MOC_LITERAL(11, 107, 12), // "stateChanged"
-QT_MOC_LITERAL(12, 120, 19), // "QMediaPlayer::State"
-QT_MOC_LITERAL(13, 140, 5), // "state"
-QT_MOC_LITERAL(14, 146, 18), // "mediaStatusChanged"
-QT_MOC_LITERAL(15, 165, 25), // "QMediaPlayer::MediaStatus"
-QT_MOC_LITERAL(16, 191, 6), // "status"
-QT_MOC_LITERAL(17, 198, 9), // "showError"
-QT_MOC_LITERAL(18, 208, 19), // "QMediaPlayer::Error"
-QT_MOC_LITERAL(19, 228, 5), // "error"
-QT_MOC_LITERAL(20, 234, 12), // "mediaChanged"
-QT_MOC_LITERAL(21, 247, 13), // "QMediaContent"
-QT_MOC_LITERAL(22, 261, 5), // "media"
-QT_MOC_LITERAL(23, 267, 24), // "metaDataAvailableChanged"
-QT_MOC_LITERAL(24, 292, 9), // "available"
-QT_MOC_LITERAL(25, 302, 18), // "tableDoubleClicked"
-QT_MOC_LITERAL(26, 321, 3), // "row"
-QT_MOC_LITERAL(27, 325, 12), // "clearSources"
-QT_MOC_LITERAL(28, 338, 17), // "trayIconActivated"
-QT_MOC_LITERAL(29, 356, 33), // "QSystemTrayIcon::ActivationRe..."
-QT_MOC_LITERAL(30, 390, 16) // "activationReason"
+QT_MOC_LITERAL(4, 26, 18), // "set_plaly_or_pause"
+QT_MOC_LITERAL(5, 45, 7), // "setStop"
+QT_MOC_LITERAL(6, 53, 12), // "skipBackward"
+QT_MOC_LITERAL(7, 66, 11), // "skipForward"
+QT_MOC_LITERAL(8, 78, 8), // "openFile"
+QT_MOC_LITERAL(9, 87, 16), // "setPlaylistShown"
+QT_MOC_LITERAL(10, 104, 11), // "setLrcShown"
+QT_MOC_LITERAL(11, 116, 12), // "stateChanged"
+QT_MOC_LITERAL(12, 129, 19), // "QMediaPlayer::State"
+QT_MOC_LITERAL(13, 149, 5), // "state"
+QT_MOC_LITERAL(14, 155, 18), // "mediaStatusChanged"
+QT_MOC_LITERAL(15, 174, 25), // "QMediaPlayer::MediaStatus"
+QT_MOC_LITERAL(16, 200, 6), // "status"
+QT_MOC_LITERAL(17, 207, 9), // "showError"
+QT_MOC_LITERAL(18, 217, 19), // "QMediaPlayer::Error"
+QT_MOC_LITERAL(19, 237, 5), // "error"
+QT_MOC_LITERAL(20, 243, 19), // "currentmediaChanged"
+QT_MOC_LITERAL(21, 263, 13), // "QMediaContent"
+QT_MOC_LITERAL(22, 277, 5), // "media"
+QT_MOC_LITERAL(23, 283, 24), // "metaDataAvailableChanged"
+QT_MOC_LITERAL(24, 308, 9), // "available"
+QT_MOC_LITERAL(25, 318, 18), // "tableDoubleClicked"
+QT_MOC_LITERAL(26, 337, 3), // "row"
+QT_MOC_LITERAL(27, 341, 12), // "clearSources"
+QT_MOC_LITERAL(28, 354, 17), // "trayIconActivated"
+QT_MOC_LITERAL(29, 372, 33), // "QSystemTrayIcon::ActivationRe..."
+QT_MOC_LITERAL(30, 406, 16) // "activationReason"
 
     },
-    "MyWidget\0updateTime\0\0time\0setPaused\0"
+    "MyWidget\0updateTime\0\0time\0set_plaly_or_pause\0"
     "setStop\0skipBackward\0skipForward\0"
     "openFile\0setPlaylistShown\0setLrcShown\0"
     "stateChanged\0QMediaPlayer::State\0state\0"
     "mediaStatusChanged\0QMediaPlayer::MediaStatus\0"
     "status\0showError\0QMediaPlayer::Error\0"
-    "error\0mediaChanged\0QMediaContent\0media\0"
-    "metaDataAvailableChanged\0available\0"
+    "error\0currentmediaChanged\0QMediaContent\0"
+    "media\0metaDataAvailableChanged\0available\0"
     "tableDoubleClicked\0row\0clearSources\0"
     "trayIconActivated\0QSystemTrayIcon::ActivationReason\0"
     "activationReason"
@@ -138,7 +138,7 @@ void MyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->updateTime((*reinterpret_cast< qint64(*)>(_a[1]))); break;
-        case 1: _t->setPaused(); break;
+        case 1: _t->set_plaly_or_pause(); break;
         case 2: _t->setStop(); break;
         case 3: _t->skipBackward(); break;
         case 4: _t->skipForward(); break;
@@ -148,7 +148,7 @@ void MyWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 8: _t->stateChanged((*reinterpret_cast< QMediaPlayer::State(*)>(_a[1]))); break;
         case 9: _t->mediaStatusChanged((*reinterpret_cast< QMediaPlayer::MediaStatus(*)>(_a[1]))); break;
         case 10: _t->showError((*reinterpret_cast< QMediaPlayer::Error(*)>(_a[1]))); break;
-        case 11: _t->mediaChanged((*reinterpret_cast< const QMediaContent(*)>(_a[1]))); break;
+        case 11: _t->currentmediaChanged((*reinterpret_cast< const QMediaContent(*)>(_a[1]))); break;
         case 12: _t->metaDataAvailableChanged((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 13: _t->tableDoubleClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 14: _t->clearSources(); break;

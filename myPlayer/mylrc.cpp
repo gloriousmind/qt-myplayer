@@ -118,7 +118,7 @@ QTimer * MyLrc::lrcTimer()
 }
 
 //返回歌词遮罩播放状态
-bool & MyLrc::mask_flag()
+bool & MyLrc::mask_flag_from_pause()
 {
     return this->mask_returnFromPause;
 }

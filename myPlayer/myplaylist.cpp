@@ -16,7 +16,7 @@ MyPlaylist::MyPlaylist(QWidget * parent) : QTableWidget(parent)
     list << "标题" << "艺术家" << "长度";
 
     setHorizontalHeaderLabels(list);
-    //两行代码一起设置只能选择单行
+    //设置只能选择单行
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     //设置不显示网格
